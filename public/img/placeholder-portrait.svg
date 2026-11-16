@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22463b"/>
+      <stop offset="55%" stop-color="#16281f"/>
+      <stop offset="100%" stop-color="#0f1d17"/>
+    </linearGradient>
+    <pattern id="p" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M20 4c6 5 6 12 0 16-6-4-6-11 0-16zM20 36c-6-5-6-12 0-16 6 4 6 11 0 16z" fill="none" stroke="#c9a227" stroke-width=".7" opacity=".18"/>
+      <circle cx="20" cy="20" r="1.4" fill="#c9a227" opacity=".22"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="600" fill="url(#g)"/>
+  <rect width="400" height="600" fill="url(#p)"/>
+  <g stroke="#c9a227" fill="none" opacity=".45">
+    <rect x="18" y="18" width="364" height="564" stroke-width="1"/>
+    <rect x="26" y="26" width="348" height="548" stroke-width=".6"/>
+  </g>
+  <g fill="#c9a227" opacity=".5">
+    <text x="200" y="300" text-anchor="middle" font-family="Georgia, serif" font-size="30" letter-spacing="6">FOTO</text>
+  </g>
+</svg>

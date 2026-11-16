@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="g6" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a4d40"/>
+      <stop offset="100%" stop-color="#1a2f26"/>
+    </linearGradient>
+    <pattern id="p6" width="56" height="56" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="#c9a227" stroke-width=".8" opacity=".13">
+        <path d="M28 8c7 6 7 14 0 19-7-5-7-13 0-19zM28 48c-7-6-7-14 0-19 7 5 7 13 0 19z"/>
+        <circle cx="28" cy="28" r="1.4"/>
+      </g>
+    </pattern>
+  </defs>
+  <rect width="800" height="1000" fill="url(#g6)"/>
+  <rect width="800" height="1000" fill="url(#p6)"/>
+  <g stroke="#c9a227" fill="none" opacity=".34">
+    <rect x="30" y="30" width="740" height="940" stroke-width="1.1"/>
+  </g>
+  <g fill="#e2c574" opacity=".42" font-family="Georgia, serif" text-anchor="middle">
+    <text x="400" y="500" font-size="26" letter-spacing="7">GALERI 6</text>
+  </g>
+</svg>

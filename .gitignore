@@ -1,0 +1,17 @@
+node_modules/
+.next/
+.next-production/
+out/
+.env*
+!.env.example
+.work/
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+*.log
+*.db
+*.sqlite*
+*.sql
+*.dump
+public/uploads/
+coverage/

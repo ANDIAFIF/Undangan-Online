@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Invitation {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Cover & branding
+  title       String  @default("The Wedding Of")
+  coverImage  String?
+  musicUrl    String?
+  musicTitle  String?
+  // Ornamen aksen: "hijau-emas" (default) atau "rose"
+  theme       String  @default("hijau-emas")
+
+  // Mempelai
+  brideName        String
+  brideNick        String
+  brideParents     String
+  brideInstagram   String?
+  bridePhoto       String?
+  groomName        String
+  groomNick        String
+  groomParents     String
+  groomInstagram   String?
+  groomPhoto       String?
+  // "bride-first" atau "groom-first"
+  coupleOrder      String  @default("bride-first")
+
+  // Teks
+  openingSalam  String? // Assalamu'alaikum...
+  invitationText String?
+  quoteText     String?
+  quoteSource   String?
+  closingText   String?
+
+  // Acara
+  mainDate     DateTime?
+  akadAt       DateTime?
+  akadEndAt    DateTime?
+  resepsiAt    DateTime?
+  resepsiEndAt DateTime?
+  venueName    String?
+  venueAddress String?
+  mapsUrl      String?
+
+  // Love story: [{title, date, text}]
+  storyItems Json @default("[]")
+  // Galeri: ["/uploads/a.webp", ...]
+  gallery    Json @default("[]")
+  // Rekening: [{bank, number, holder}]
+  giftAccounts Json @default("[]")
+  giftText     String?
+  giftAddress  String?
+
+  // Turut mengundang: ["Keluarga Bapak X", ...]
+  invitedBy Json @default("[]")
+
+  isPublished Boolean @default(true)
+  guests      Guest[]
+  wishes      Wish[]
+}
+
+model UploadedPhoto {
+  id        String   @id @default(cuid())
+  data      Bytes
+  createdAt DateTime @default(now())
+}
+
+model Guest {
+  id           String   @id @default(cuid())
+  invitationId String
+  invitation   Invitation @relation(fields: [invitationId], references: [id], onDelete: Cascade)
+  name         String
+  slug         String
+  phone        String?
+  note         String?
+  openCount    Int      @default(0)
+  firstOpenedAt DateTime?
+  lastOpenedAt  DateTime?
+  createdAt    DateTime @default(now())
+
+  wish Wish?
+
+  @@unique([invitationId, slug])
+  @@index([invitationId])
+}
+
+enum Attendance {
+  HADIR
+  RAGU
+  TIDAK_HADIR
+}
+
+model Wish {
+  id        String   @id @default(cuid())
+  invitationId String
+  invitation   Invitation @relation(fields: [invitationId], references: [id], onDelete: Cascade)
+  guestId   String?  @unique
+  guest     Guest?   @relation(fields: [guestId], references: [id], onDelete: SetNull)
+  name      String
+  attendance Attendance @default(HADIR)
+  guestCount Int     @default(1)
+  message   String
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@index([invitationId, createdAt])
+}

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="1200" viewBox="0 0 600 1200">
+<defs><linearGradient id="paper" x2="0" y2="1"><stop stop-color="#edf2df"/><stop offset=".5" stop-color="#fffdf1"/><stop offset="1" stop-color="#dce5cc"/></linearGradient><pattern id="weave" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M0 20 20 0 40 20 20 40Z" fill="none" stroke="#b99a57" opacity=".35"/></pattern></defs>
+<path fill="url(#paper)" d="M0 0h600v1200H0z"/><path fill="#22463b" d="M0 0h32v1200H0zM568 0h32v1200h-32z"/><path fill="url(#weave)" d="M0 0h600v90H0zM0 1110h600v90H0zM0 0h32v1200H0zM568 0h32v1200h-32z"/>
+<g fill="none" stroke="#b99a57"><rect x="45" y="28" width="510" height="1144" rx="220"/><rect x="53" y="36" width="494" height="1128" rx="214" opacity=".5"/></g><g fill="#b99a57"><path d="m300 110 12 20-12 20-12-20zM300 1050l12 20-12 20-12-20z"/></g></svg>
