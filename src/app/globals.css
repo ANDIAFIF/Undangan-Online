@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   TOKEN TEMA — hijau tua adat Makassar + emas sampanye
+   TOKEN TEMA — hijau tua adat Bugis + emas sampanye
    ============================================================ */
 :root {
   --ink: #16281f;
@@ -841,9 +841,9 @@ body.locked {
   .gallery-grid { gap: 0.85rem; }
 }
 
-/* Tema Makassar: dekorasi geometris bawaan template gratis. */
+/* Tema Bugis: aset dekorasi lokal dari referensi, data tetap dari proyek. */
 .cover {
-  background: #f5f2dc url('/img/theme/makassar.svg') center / cover no-repeat;
+  background: #f5f2dc url('/img/theme/bugishijau.jpeg') center / cover no-repeat;
   color: #513615;
   padding: 26vh max(2rem, 10vw) 25vh;
   overflow-y: auto;
@@ -879,12 +879,12 @@ body.locked {
   display: grid;
   place-items: center;
   padding: 13rem 2.5rem 12rem;
-  background: #faf8ec url('/img/theme/makassar.svg') center / cover no-repeat;
+  background: #faf8ec url('/img/theme/bugishijau.jpeg') center / cover no-repeat;
 }
 .invitation-hero .hero-name { color: #3a706b; font-size: clamp(2.5rem, 12vw, 3.5rem); }
 .invitation-hero .cover-guest { background: rgba(255,255,255,.65) !important; border-radius: 12px; padding: .75rem; }
 .invitation #mempelai, .invitation #closing {
-  background: #f8fae7 url('/img/theme/makassar.svg') center / 100% 100% no-repeat;
+  background: #f8fae7 url('/img/theme/bugiss2.jpeg') center / 100% 100% no-repeat;
   padding-top: 9rem;
   padding-bottom: 12rem;
 }
@@ -912,7 +912,7 @@ body.locked {
 }
 .section--dark { background: radial-gradient(ellipse at top, #35574a, #142e25); }
 .section--dark .eyebrow { color: #e2c574; }
-.invitation #acara { background: linear-gradient(#faf8eceb, #faf8eceb), url('/img/theme/makassar.svg') center / cover; }
+.invitation #acara { background: linear-gradient(#faf8eceb, #faf8eceb), url('/img/theme/bugiss2.jpeg') center / cover; }
 .event-card { border-radius: 100px 100px 16px 16px; padding: 3rem 1.2rem 2rem; background: #fffdf4; }
 .event-card::before { border-radius: 94px 94px 12px 12px; }
 .event-name { font-family: var(--font-script); text-transform: none; letter-spacing: 0; font-size: 2.7rem; }
@@ -948,7 +948,7 @@ button { cursor: pointer; }
 #invitation-content:focus { outline: none; }
 @media (min-width: 900px) {
   #invitation-content { --panel-width: 460px; }
-  .desktop-cover { position: fixed; inset: 0 var(--panel-width) 0 0; display: grid; place-items: center; background: #f3f1db url('/img/theme/makassar.svg') center / cover no-repeat; text-align: center; padding: 2rem; }
+  .desktop-cover { position: fixed; inset: 0 var(--panel-width) 0 0; display: grid; place-items: center; background: #f3f1db url('/img/theme/bugishijau.jpeg') center / cover no-repeat; text-align: center; padding: 2rem; }
   .desktop-cover-inner { width: min(520px, 85%); padding: 2.5rem 1rem; background: #faf8eaa8; border: 1px solid #c4a36a75; border-radius: 180px 180px 12px 12px; backdrop-filter: blur(3px); }
   .desktop-cover .eyebrow { color: #71532f; }
   .desktop-names { font-family: var(--font-script); color: #32675a; font-size: clamp(3rem, 5vw, 5rem); line-height: 1.1; margin-top: 1rem; overflow-wrap: anywhere; }
@@ -976,23 +976,25 @@ button { cursor: pointer; }
   .petals { display: none; }
 }
 
-/* Animasi pembukaan dan reveal. */
+/* Motion timing from Bugis reference: 3s cover entrance, 2.5s scroll reveal. */
+@font-face { font-family: 'Theme Caladea'; src: url('/fonts/Caladea.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Theme Poltawski'; src: url('/fonts/PoltawskiNowy.otf') format('opentype'); font-display: swap; }
 .cover { transition: transform 1.2s ease-in-out, opacity 1.5s ease-in-out, visibility 0s 1.5s; }
 .cover.is-open { transform: translateY(-100%); opacity: 0; visibility: hidden; }
 .cover-inner { animation: none; }
 .cover-enter { opacity: 0; transform: translateY(6rem); transition: opacity 3s ease, transform 3s ease; }
 .cover-enter-down { transform: translateY(-6rem); }
 .cover.is-ready .cover-enter { opacity: 1; transform: translateY(0); }
-.cover .eyebrow { font-family: var(--font-crimson), Georgia, serif; font-size: 14px; font-weight: 400; letter-spacing: 1px; text-transform: none; margin: 0; }
-.cover-names { font-family: var(--font-playfair), Georgia, serif; font-size: clamp(32px, 12.3vw, 48px); font-weight: 500; margin: 15px 0; gap: .13em; }
+.cover .eyebrow { font-family: 'Theme Poltawski', Georgia, serif; font-size: 14px; font-weight: 400; letter-spacing: 1px; text-transform: none; margin: 0; }
+.cover-names { font-family: 'Theme Caladea', Georgia, serif; font-size: clamp(32px, 12.3vw, 48px); font-weight: 500; margin: 15px 0; gap: .13em; }
 .cover-date { font-family: Arial, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0; margin: 18px 0 3.5rem; }
 .cover-guest { margin-top: 0; padding: 0; }
 .cover-guest small { font-family: Arial, sans-serif; font-size: 14px; }
-.cover-guest strong { font-family: var(--font-crimson), Georgia, serif; font-size: 15px; font-weight: 600; margin-top: 18px; }
-.cover .btn-open { font-family: var(--font-crimson), Georgia, serif; font-size: 10px; letter-spacing: 1px; padding: .4rem 1rem; min-height: 30px; margin-top: 18px; }
-.motion-hero { position: relative; min-height: 100svh; display: grid; place-items: center; overflow: hidden; isolation: isolate; background: #f5f2dc url('/img/theme/makassar.svg') center / cover; }
+.cover-guest strong { font-family: 'Theme Poltawski', Georgia, serif; font-size: 15px; font-weight: 600; margin-top: 18px; }
+.cover .btn-open { font-family: 'Theme Poltawski', Georgia, serif; font-size: 10px; letter-spacing: 1px; padding: .4rem 1rem; min-height: 30px; margin-top: 18px; }
+.motion-hero { position: relative; min-height: 100svh; display: grid; place-items: center; overflow: hidden; isolation: isolate; background: #f5f2dc url('/img/theme/bugishijau.jpeg') center / cover; }
 .opening-video, .opening-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-.opening-poster { background: url('/img/theme/makassar.svg') center / cover; opacity: 0; transition: opacity 1s ease; }
+.opening-poster { background: url('/img/theme/bugishijau.jpeg') center / cover; opacity: 0; transition: opacity 1s ease; }
 .opening-poster.is-visible { opacity: 1; }
 .opening-titles { position: relative; z-index: 1; width: 100%; padding: 0 1.3rem; margin-top: 3rem; text-align: center; opacity: 0; visibility: hidden; }
 .opening-titles.is-visible { opacity: 1; visibility: visible; }

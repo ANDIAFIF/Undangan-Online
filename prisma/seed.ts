@@ -12,19 +12,19 @@ async function main() {
 
   const inv = await prisma.invitation.create({
     data: {
-      slug: "demo-makassar",
+      slug: "AFIFoundPutri",
       title: "The Wedding Of",
       theme: "hijau-emas",
       musicUrl: "",
       musicTitle: "Instrumental",
 
-      brideName: "Mempelai Wanita Demo",
-      brideNick: "Wanita",
-      brideParents: "Putri dari Bapak Contoh dan Ibu Contoh",
+      brideName: "Putri Indriwayti",
+      brideNick: "Putri",
+      brideParents: "Putri dari Bapak Iskandar dan Ibu Darwiyah",
       brideInstagram: "",
-      groomName: "Mempelai Pria Demo",
-      groomNick: "Pria",
-      groomParents: "Putra dari Bapak Demo dan Ibu Demo",
+      groomName: "Putra Kamilsyah",
+      groomNick: "Putra",
+      groomParents: "Putra dari Bapak Iskandar dan Ibu Darwiyah",
       groomInstagram: "",
 
       openingSalam: "بسم الله الرحمن الرحيم",
@@ -41,8 +41,8 @@ async function main() {
       akadEndAt: new Date("2026-12-12T11:30:00+08:00"),
       resepsiAt: new Date("2026-12-12T11:30:00+08:00"),
       resepsiEndAt: new Date("2026-12-12T16:00:00+08:00"),
-      venueName: "Gedung Contoh (Dummy)",
-      venueAddress: "Alamat contoh, Makassar (bukan lokasi acara nyata)",
+      venueName: "Gedung Serbaguna",
+      venueAddress: "Jl. Contoh No. 1, Kecamatan, Kota",
       mapsUrl: "https://maps.google.com/?q=Makassar",
 
       storyItems: [
@@ -52,7 +52,10 @@ async function main() {
         { title: "Menikah", date: "12 Desember 2026", text: "Petualangan tidak berakhir di sini, justru baru dimulai." },
       ],
       gallery: [],
-      giftAccounts: [],
+      giftAccounts: [
+        { bank: "BCA", number: "1234567890", holder: "Putri Indriwayti" },
+        { bank: "DANA / e-wallet", number: "081234567890", holder: "Putra Kamilsyah" },
+      ],
       giftText:
         "Bagi Bapak/Ibu/Saudara/i yang ingin mengirimkan hadiah pernikahan dapat melalui virtual account atau e-wallet di bawah ini:",
       giftAddress: "",
@@ -61,9 +64,9 @@ async function main() {
   });
 
   const guests = [
-    { name: "Tamu Contoh Satu", phone: "" },
-    { name: "Tamu Contoh Dua", phone: "" },
-    { name: "Tamu Contoh Tiga", phone: "" },
+    { name: "Bapak Andi Fitra Furqan", phone: "081234567890" },
+    { name: "Bapak Ahmad Yusuf", phone: "081298765432" },
+    { name: "Ibu Ratna Sari", phone: "" },
   ];
 
   for (const g of guests) {

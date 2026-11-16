@@ -10,11 +10,11 @@ const MusicPlayer = forwardRef<MusicHandle, { src: string | null; shouldPlay: bo
     const [playing, setPlaying] = useState(false);
     const [error, setError] = useState(false);
     const startTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const musicSrc = src?.trim() || undefined;
+    const musicSrc = src?.trim() || "/audio/reference-wedding.mp3";
 
     const play = (opening = false) => {
       const audio = audioRef.current;
-      if (!audio || !musicSrc) return;
+      if (!audio) return;
       if (startTimer.current) clearTimeout(startTimer.current);
       setError(false);
       if (audio.error) audio.load();
@@ -31,7 +31,7 @@ const MusicPlayer = forwardRef<MusicHandle, { src: string | null; shouldPlay: bo
       <audio ref={audioRef} src={musicSrc} loop preload="auto"
         onPlaying={() => { setPlaying(true); setError(false); }}
         onPause={() => setPlaying(false)} onError={() => { setPlaying(false); setError(true); }} />
-      <button hidden={!shouldPlay || !musicSrc} type="button" className={`music-btn ${playing ? "playing" : ""}`}
+      <button hidden={!shouldPlay} type="button" className={`music-btn ${playing ? "playing" : ""}`}
         onClick={() => { if (audioRef.current?.paused) play(); else audioRef.current?.pause(); }}
         aria-pressed={playing} aria-label={playing ? "Jeda musik" : "Putar musik"}
         title={error ? "Musik belum diputar. Ketuk untuk mencoba lagi." : playing ? "Jeda musik" : "Putar musik"}>

@@ -16,10 +16,10 @@ export default function InvalidUrlPage() {
         </h1>
         <div aria-hidden="true" style={{ width: "3rem", height: "1px", margin: "2rem auto", background: "#f6e8bc", opacity: 0.35 }} />
         <p style={{ margin: 0, fontFamily: "Arial, sans-serif", fontSize: "clamp(0.875rem, 2.5vw, 1rem)", letterSpacing: "0.12em", lineHeight: 1.8 }}>
-          UNDANGAN ONLINE
+          ALIGUKA WAS HERE :)
         </p>
         <p style={{ margin: "0.5rem 0 0", fontFamily: "Arial, sans-serif", fontSize: "0.8rem", letterSpacing: "0.18em", opacity: 0.65 }}>
-          Gunakan tautan dari pengundang.
+          CyberSec
         </p>
       </div>
     </main>
