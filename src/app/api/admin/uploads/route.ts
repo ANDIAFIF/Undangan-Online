@@ -9,7 +9,8 @@ const MAX_BYTES = 10 * 1024 * 1024;
 export async function POST(request: NextRequest) {
   if (!(await isAdmin())) return NextResponse.json({ error: "Silakan login sebagai admin." }, { status: 401 });
   const origin = request.headers.get("origin");
-  if (origin && origin !== request.nextUrl.origin) return NextResponse.json({ error: "Origin tidak valid." }, { status: 403 });
+  const publicOrigin = new URL(process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin).origin;
+  if (origin && origin !== publicOrigin) return NextResponse.json({ error: "Origin tidak valid." }, { status: 403 });
   if (Number(request.headers.get("content-length")) > MAX_BYTES + 65536) {
     return NextResponse.json({ error: "Maksimal 10 MB per foto." }, { status: 413 });
   }

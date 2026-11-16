@@ -19,13 +19,13 @@ export async function middleware(req: NextRequest) {
 
   if (pathname === "/admin/login") {
     const ok = await verify(req.cookies.get(COOKIE)?.value);
-    if (ok) return NextResponse.redirect(new URL("/admin", req.url));
+    if (ok) return NextResponse.redirect(new URL("/admin", process.env.NEXT_PUBLIC_SITE_URL || req.url));
     return NextResponse.next();
   }
 
   const ok = await verify(req.cookies.get(COOKIE)?.value);
   if (!ok) {
-    const url = new URL("/admin/login", req.url);
+    const url = new URL("/admin/login", process.env.NEXT_PUBLIC_SITE_URL || req.url);
     url.searchParams.set("next", pathname);
     return NextResponse.redirect(url);
   }
