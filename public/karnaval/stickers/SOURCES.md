@@ -1,0 +1,27 @@
+# Stiker referensi
+
+- `hearts`: https://inveet.id/static/wish-stickers/hearts.png
+- `rings`: https://inveet.id/static/wish-stickers/rings.png
+- `cheers`: https://inveet.id/static/wish-stickers/cheers.png
+- `cake`: https://inveet.id/static/wish-stickers/cake.png
+- `dancing-celebration-86cd222f`: https://assets-staging.inveet.id/stickers/dancing-celebration-86cd222f.gif
+- `quby-cheering-2590833d`: https://assets-staging.inveet.id/stickers/quby-cheering-2590833d.gif
+- `animated-wish-1-e48f1a48`: https://assets-staging.inveet.id/stickers/animated-wish-1-e48f1a48.gif
+- `animated-wish-2-4ba9113d`: https://assets-staging.inveet.id/stickers/animated-wish-2-4ba9113d.gif
+- `animated-wish-3-53c4dc87`: https://assets-staging.inveet.id/stickers/animated-wish-3-53c4dc87.gif
+- `animated-wish-4-4a8d624d`: https://assets-staging.inveet.id/stickers/animated-wish-4-4a8d624d.gif
+- `dudu-wave-f594b9d1`: https://assets-staging.inveet.id/stickers/dudu-wave-f594b9d1.gif
+- `bubu-dudu-greeting-262efa08`: https://assets-staging.inveet.id/stickers/bubu-dudu-greeting-262efa08.gif
+- `dudu-twisting-dance-1ee32361`: https://assets-staging.inveet.id/stickers/dudu-twisting-dance-1ee32361.gif
+- `happy-birthday-c9753492`: https://assets-staging.inveet.id/stickers/happy-birthday-c9753492.gif
+- `bubu-dudu-celebration-0972266b`: https://assets-staging.inveet.id/stickers/bubu-dudu-celebration-0972266b.gif
+- `cute-bear-1a61618e`: https://assets-staging.inveet.id/stickers/cute-bear-1a61618e.gif
+- `animated-wish-5-2c364bb3`: https://assets-staging.inveet.id/stickers/animated-wish-5-2c364bb3.gif
+- `weird-reaction-b9177f5d`: https://assets-staging.inveet.id/stickers/weird-reaction-b9177f5d.gif
+- `animated-wish-6-67b768c9`: https://assets-staging.inveet.id/stickers/animated-wish-6-67b768c9.gif
+- `scuba-cat-cc46b684`: https://assets-staging.inveet.id/stickers/scuba-cat-cc46b684.gif
+- `animated-wish-7-48cee2f1`: https://assets-staging.inveet.id/stickers/animated-wish-7-48cee2f1.gif
+- `animated-wish-8-f86a127a`: https://assets-staging.inveet.id/stickers/animated-wish-8-f86a127a.gif
+- `crying-kitten-534970e5`: https://assets-staging.inveet.id/stickers/crying-kitten-534970e5.gif
+- `quby-sticker-21eccc42`: https://assets-staging.inveet.id/stickers/quby-sticker-21eccc42.gif
+- `revenk-d7320d67`: https://assets-staging.inveet.id/stickers/revenk-d7320d67.gif

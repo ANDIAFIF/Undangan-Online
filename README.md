@@ -1,6 +1,6 @@
 # Undangan Digital + Panel Admin
 
-Undangan pernikahan digital satu halaman (tema hijau-emas adat Bugis) lengkap dengan **panel admin** untuk membuat link unik per tamu, memantau siapa yang sudah membuka undangan, dan mengelola RSVP/ucapan.
+Undangan pernikahan digital interaktif bertema pixel Karnaval Kita lengkap dengan **panel admin** untuk membuat link unik per tamu, memantau siapa yang sudah membuka undangan, dan mengelola RSVP/ucapan.
 
 ## Fitur
 
@@ -99,7 +99,7 @@ Upload menerima JPG, PNG, dan WebP tanpa animasi, maksimal 10 MB dan 40 megapiks
 - **Musik**: taruh file di `public/audio/music.mp3`, lalu isi kolom URL Musik di *Pengaturan*.
 - **Ornamen**: ganti SVG di `public/ornaments/` bila ingin motif sendiri.
 
-## Penyesuaian tampilan referensi
+## Riwayat tema sebelumnya (tidak aktif)
 
 Tampilan mengacu pada https://ganami.my.id/524/putra-putri?to=namatamu. Implementasi tetap memakai Next.js dan data proyek yang sudah ada; tidak menyalin backend, foto mempelai, rekening, atau data tamu dari referensi. Video pembuka, musik, dekorasi, dan dua font cover memakai aset referensi yang disimpan lokal.
 
@@ -112,7 +112,7 @@ Layout desktop memakai panel dekorasi tetap dan kolom undangan 460 px; layar kec
 Foto placeholder tetap dipertahankan jika belum diisi. Jika URL musik pada pengaturan kosong, pemutar menggunakan musik referensi lokal; URL musik khusus tetap diutamakan. Tidak ada perubahan data database atau publikasi hosting dalam pekerjaan tampilan ini.
 
 
-### Animasi dan audio referensi
+### Arsip aset tema sebelumnya
 
 - `public/video/bugis-opening.mp4`: `https://ganami.my.id/assets_plush/img/Bugis22.mp4` (20,969 detik, H.264, 608 × 1080).
 - `public/audio/reference-wedding.mp3`: `https://ganami.my.id/assets/uploads/524/music_6aa23b6da63561.17800955.mp3` (101,146 detik, loop).
@@ -121,3 +121,45 @@ Foto placeholder tetap dipertahankan jika belum diisi. Jika URL musik pada penga
 Cover masuk selama 3 detik dan bergeser ke atas saat dibuka. Video dimulai setelah klik; teks mengikuti waktu video mulai detik 9, dengan stagger 350 ms, kemudian poster tampil setelah video selesai. Reveal saat scroll memakai durasi 2,5 detik, varian slide/zoom, dan dapat terulang. Musik dipicu langsung pada gestur pengguna untuk kompatibilitas autoplay, dengan tombol jeda/putar. Preferensi reduced motion melewati video dan menampilkan teks; kegagalan video tetap menampilkan poster dan isi.
 
 Build produksi disimpan di `.next-production`, terpisah dari cache development `.next`, sehingga verifikasi produksi tidak menimpa server development yang sedang berjalan.
+
+## Karnaval Kita (tema aktif)
+
+Halaman publik kini menggunakan `src/components/invitation/karnaval/`, dengan referensi visual [Karnaval Kita Quest](https://inveet.id/theme-preview/karnaval-kita-quest). Data mempelai, tanggal, tempat, musik, rekening, galeri, dan token tamu tetap berasal dari database proyek. Cover menggunakan nama panggilan yang sudah tersimpan. Panel admin tetap tersedia di `/admin`.
+
+- Cover pixel, pilihan karakter pria/wanita, sambutan dari teks pembuka yang sudah ada, dan panduan.
+- Peta tiga area dengan joystick/WASD/panah, tombol aksi, stan undangan, bianglala berputar, orkes, pemandu kucing interaktif, dan lentera ucapan yang bisa diketuk. Desktop memakai area permainan 480 px seperti referensi.
+- Modal mempelai, acara/countdown/peta/kalender, galeri/lightbox, kisah, hadiah/salin rekening, RSVP, QR tautan undangan, dan pintasan undangan ringkas.
+- Lempar Gelang: enam lemparan, bidik lalu atur tenaga. Pancing Bebek: 30 detik, empat nilai bebek. Skor memberi 1–3 kupon, kunjungan pertama memberi satu kupon, enam aksesori dapat ditukar dan dikenakan. Kupon dan inventaris disimpan di perangkat per undangan/token tamu.
+- Papan skor tersimpan di PostgreSQL, dengan sesi permainan sekali pakai, batas skor, dan pemeriksaan durasi dasar. Skor berasal dari klien; ini bukan sistem anti-cheat kompetitif.
+- Chat antartamu dan kehadiran karakter tersimpan di PostgreSQL. Polling kehadiran setiap 2,5 detik, chat setiap 4 detik; karakter menghilang setelah 12 detik tanpa pembaruan. Riwayat chat yang ditampilkan dibatasi 24 jam.
+- Photobox: kamera depan, tiga pose dengan hitung mundur, pilihan foto dari perangkat, empat efek, tiga desain bingkai (Karnaval/Tiket/Klasik), warna bingkai yang langsung memperbarui hasil, dan unduhan PNG 680 × 1680. Foto photobox diproses di perangkat, tidak diunggah.
+- Ucapan menerima 25 stiker PNG/GIF dari katalog referensi dan rekaman suara opsional maksimal 30 detik/3 MB. Rekaman disimpan di PostgreSQL; audio ucapan tersembunyi hanya dapat diakses admin.
+
+Sambutan memakai teks pembuka undangan, sesuai pilihan pengguna. Tombol **Dengarkan teks** memakai `speechSynthesis` browser, bukan rekaman/kloning suara mempelai. Catatan internal tamu tidak dibuka kepada tamu. QR berisi tautan undangan; tidak menyatakan tamu sudah check-in. Chat dan papan skor memakai backend proyek sendiri, bukan koneksi ke layanan Inveet.
+
+### Skema dan menjalankan
+
+Setelah mengambil perubahan di lingkungan lain, jalankan:
+
+```bash
+npm install
+npx prisma db push
+npm run build
+npm run start
+```
+
+Tambahan skema: `CarnivalPresence`, `CarnivalChat`, `CarnivalRun`, `UploadedVoice`, serta kolom opsional `Wish.voiceId` dan `Wish.sticker`. Tidak perlu menjalankan seed ulang. Pengujian lokal telah menerapkan perubahan skema secara aditif pada database lokal; penerapan ke database hosting belum dilakukan.
+
+```bash
+npx tsx --test src/lib/carnival.test.ts src/lib/invitation-guest.test.ts
+```
+
+Uji browser dan integrasi lokal memakai skrip di `.work/karnaval/` (diabaikan Git). Hasil final: 64 pemeriksaan alur browser pada 320/390/768/1440 px, 9 pemeriksaan detail interaksi, 23 pemeriksaan backend, dan 5 unit test lulus, termasuk putaran permainan, penukaran kupon, photobox dari foto, RSVP, rekaman, moderasi, chat, kehadiran, penolakan replay skor, dan admin. Kamera tiga pose dan rekaman mikrofon diuji dengan perangkat simulasi Chrome; backend rekaman juga diuji dengan audio sintetis. Kamera/mikrofon fisik serta ketersediaan suara pembaca teks browser belum diuji.
+
+Aset tema dan font berada di `public/karnaval/` dan `karnaval/fonts.css`, disimpan lokal dari aset publik referensi. Sumber setiap aset visual dicatat di `public/karnaval/SOURCES.md`. Kode aplikasi tetap Next.js; backend Inveet tidak disalin atau digunakan. Build produksi tetap terpisah di `.next-production`.
+
+### Pembaruan photobox dan deploy VPS
+
+Perbaikan kamera memiliki 7 tes tambahan untuk fallback constraint, pembatalan izin, frame belum siap, timeout, dan pesan error. Pengguna sudah mengonfirmasi kamera fisik tampil di localhost. Bingkai kini dapat diganti setelah foto tanpa mengambil ulang.
+
+Panduan Ubuntu + PM2 dengan database VPS yang sudah ada: [docs/DEPLOY-VPS.md](docs/DEPLOY-VPS.md). Konfigurasi proses opsional tersedia di `ecosystem.config.js`; sesuaikan port/nama dengan deployment yang berjalan.

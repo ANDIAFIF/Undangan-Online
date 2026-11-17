@@ -110,8 +110,53 @@ model Wish {
   attendance Attendance @default(HADIR)
   guestCount Int     @default(1)
   message   String
+  voiceId   String?
+  sticker   String?
   isVisible Boolean  @default(true)
   createdAt DateTime @default(now())
 
   @@index([invitationId, createdAt])
+}
+
+// Karnaval: independent tables keep existing invitation and guest records intact.
+model CarnivalPresence {
+  id           String   @id
+  invitationId String
+  name         String
+  avatar       String
+  wearing      String?
+  x            Int
+  y            Int
+  updatedAt    DateTime @updatedAt
+  @@index([invitationId, updatedAt])
+}
+
+model CarnivalChat {
+  id           String   @id @default(cuid())
+  invitationId String
+  clientId     String
+  name         String
+  message      String
+  createdAt    DateTime @default(now())
+  @@index([invitationId, createdAt])
+}
+
+model CarnivalRun {
+  id           String   @id @default(uuid())
+  invitationId String
+  guestId      String?
+  game         String
+  name         String?
+  score        Int?
+  createdAt    DateTime @default(now())
+  finishedAt   DateTime?
+  @@index([invitationId, game, score])
+}
+
+model UploadedVoice {
+  id           String   @id @default(cuid())
+  invitationId String
+  data         Bytes
+  mimeType     String
+  createdAt    DateTime @default(now())
 }

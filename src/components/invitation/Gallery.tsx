@@ -17,6 +17,7 @@ export default function Gallery({ images }: { images: string[] }) {
   const list = images.length ? images : PLACEHOLDERS;
   const [index, setIndex] = useState<number | null>(null);
 
+  const gridRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -41,14 +42,14 @@ export default function Gallery({ images }: { images: string[] }) {
           else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
         }
       }
-      if (e.key === "Escape") close();
+      if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(); }
       if (e.key === "ArrowRight") next();
       if (e.key === "ArrowLeft") prev();
     };
-    document.addEventListener("keydown", onKey);
+    document.addEventListener("keydown", onKey, true);
     document.body.classList.add("locked");
     return () => {
-      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("keydown", onKey, true);
       document.body.classList.remove("locked");
       previousFocus?.focus();
     };
@@ -56,7 +57,7 @@ export default function Gallery({ images }: { images: string[] }) {
 
   return (
     <>
-      <div className="gallery-grid">
+      <div ref={gridRef} className="gallery-grid">
         {list.map((src, i) => (
           <button
             type="button"
@@ -100,7 +101,7 @@ export default function Gallery({ images }: { images: string[] }) {
           >
             ›
           </button>
-        </div>, document.body
+        </div>, gridRef.current?.closest("dialog") ?? document.body
       ) : null}
     </>
   );

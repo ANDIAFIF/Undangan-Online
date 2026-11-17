@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'Jersey 20';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/karnaval/font-0.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'VT323';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/karnaval/font-1.woff2) format('truetype');
+}

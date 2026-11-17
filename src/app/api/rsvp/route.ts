@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import {validSticker} from "@/lib/carnival-stickers";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { getInvitation } from "@/lib/invitation";
@@ -9,6 +10,8 @@ const schema = z.object({
   guestCount: z.coerce.number().int().min(1).max(10).default(1),
   message: z.string().trim().min(2, "Ucapan terlalu pendek").max(500),
   token: z.string().optional().nullable(),
+  voiceId: z.string().cuid().nullable().optional(),
+  sticker: z.string().max(100).refine(validSticker,"Stiker tidak valid").nullable().optional(),
 });
 
 // Rate limit sederhana per IP: 5 kiriman / 10 menit
@@ -62,7 +65,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "Undangan tidak ditemukan" }, { status: 404 });
   }
 
-  const { name, attendance, guestCount, message, token } = parsed.data;
+  const { name, attendance, guestCount, message, token, voiceId, sticker } = parsed.data;
 
   let guest = null;
   if (token) {
@@ -71,6 +74,9 @@ export async function POST(req: NextRequest) {
     });
   }
 
+  if (token && !guest) return NextResponse.json({ok:false,error:"Tautan tamu tidak valid"},{status:403});
+  if (!invitation.isPublished) return NextResponse.json({ok:false,error:"Undangan tidak ditemukan"},{status:404});
+  if (voiceId && !await prisma.uploadedVoice.findFirst({where:{id:voiceId,invitationId:invitation.id}})) return NextResponse.json({ok:false,error:"Rekaman tidak ditemukan"},{status:400});
   const resolvedName = guest ? guest.name : name;
   const resolvedCount = attendance === "HADIR" ? guestCount : 1;
 
@@ -85,7 +91,7 @@ export async function POST(req: NextRequest) {
           name: resolvedName,
           attendance,
           guestCount: resolvedCount,
-          message,
+          message, voiceId: voiceId ?? null, sticker: sticker ?? null,
           isVisible: true,
           createdAt: new Date(),
         },
@@ -97,7 +103,7 @@ export async function POST(req: NextRequest) {
           name: resolvedName,
           attendance,
           guestCount: resolvedCount,
-          message,
+          message, voiceId: voiceId ?? null, sticker: sticker ?? null,
         },
       });
 
@@ -109,7 +115,15 @@ export async function POST(req: NextRequest) {
       attendance: wish.attendance,
       guestCount: wish.guestCount,
       message: wish.message,
+      voiceId: wish.voiceId, sticker: wish.sticker,
       createdAt: wish.createdAt.toISOString(),
     },
   });
+}
+
+export async function GET() {
+ const invitation=await getInvitation();
+ if(!invitation?.isPublished)return NextResponse.json({error:"Undangan tidak ditemukan"},{status:404});
+ const items=await prisma.wish.findMany({where:{invitationId:invitation.id,isVisible:true},orderBy:{createdAt:"desc"},take:60,select:{id:true,name:true,attendance:true,guestCount:true,message:true,voiceId:true,sticker:true,createdAt:true}});
+ return NextResponse.json({items},{headers:{"Cache-Control":"no-store"}});
 }

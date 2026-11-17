@@ -28,7 +28,7 @@ export default async function WishesPage() {
     name: w.name,
     attendance: w.attendance as WishRow["attendance"],
     guestCount: w.guestCount,
-    message: w.message,
+    message: w.message, voiceId:w.voiceId, sticker:w.sticker,
     isVisible: w.isVisible,
     createdAt: w.createdAt.toISOString(),
   }));

@@ -2,7 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import {carnivalStickers, stickerImage} from "@/lib/carnival-stickers";
+import VoiceRecorder from "./karnaval/VoiceRecorder";
+
 export type WishItem = {
+  voiceId?: string | null;
+  sticker?: string | null;
   id: string;
   name: string;
   attendance: "HADIR" | "RAGU" | "TIDAK_HADIR";
@@ -31,13 +36,22 @@ export default function Guestbook({
   initial,
   guestName,
   guestToken,
+  carnival = false,
+  onSent,
 }: {
+  carnival?: boolean;
+  onSent?: (wish:WishItem) => void;
   initial: WishItem[];
   guestName: string | null;
   guestToken: string | null;
 }) {
+  const [voiceBusy, setVoiceBusy] = useState(false);
+  const [voiceId, setVoiceId] = useState<string | null>(null);
+  const [sticker, setSticker] = useState<string | null>(null);
+  const [recorderKey, setRecorderKey] = useState(0);
   const [items, setItems] = useState<WishItem[]>(initial);
-  const [name, setName] = useState(guestName ?? "");
+  const [name, setName] = useState((guestName ?? "").slice(0,60));
+  useEffect(() => { setItems(initial); }, [initial]);
   const [attendance, setAttendance] = useState<WishItem["attendance"]>("HADIR");
   const [guestCount, setGuestCount] = useState(1);
   const [message, setMessage] = useState("");
@@ -76,6 +90,7 @@ export default function Guestbook({
           guestCount,
           message: message.trim(),
           token: guestToken,
+          voiceId, sticker,
         }),
       });
       const data = (await res.json()) as { ok: boolean; error?: string; item?: WishItem };
@@ -83,8 +98,10 @@ export default function Guestbook({
         setError(data.error || "Gagal mengirim. Coba lagi ya.");
         return;
       }
-      if (data.item) setItems((prev) => [data.item as WishItem, ...prev]);
+      if (data.item) setItems((prev) => [data.item as WishItem, ...prev.filter(i => i.id !== data.item!.id)]);
+      if (data.item) onSent?.(data.item);
       setMessage("");
+      setVoiceId(null); setSticker(null); setRecorderKey(k => k + 1);
       showToast("Ucapan & doa terkirim, terima kasih!");
     } catch {
       setError("Koneksi bermasalah. Coba lagi.");
@@ -165,11 +182,13 @@ export default function Guestbook({
           </div>
         </div>
 
+        {carnival && <><div className="kk-stickers" aria-label="Stiker ucapan">{carnivalStickers.map(s => <button type="button" key={s.id} aria-label={`Stiker ${s.name}`} aria-pressed={sticker === s.id} onClick={() => setSticker(sticker === s.id ? null : s.id)}><img src={s.src} alt={s.name} loading="lazy" /></button>)}</div><VoiceRecorder key={recorderKey} onChange={setVoiceId} onBusy={setVoiceBusy} disabled={busy}/></>}
+
         {error ? (
           <p style={{ color: "#b3261e", fontSize: "0.82rem", marginBottom: "0.7rem" }}>{error}</p>
         ) : null}
 
-        <button type="submit" className="btn-solid" style={{ width: "100%" }} disabled={busy}>
+        <button type="submit" className="btn-solid" style={{ width: "100%" }} disabled={busy || voiceBusy}>
           {busy ? "Mengirim…" : "Kirim Ucapan & Doa"}
         </button>
       </form>
@@ -195,6 +214,8 @@ export default function Guestbook({
                 <p className="wish-text" style={{ whiteSpace: "pre-line", wordBreak: "break-word" }}>
                   {w.message}
                 </p>
+                {w.sticker && <p aria-label="Stiker ucapan" style={{fontSize: "2rem"}}>{stickerImage(w.sticker) ? <img className="kk-wish-sticker" src={stickerImage(w.sticker)} alt="Stiker ucapan" loading="lazy" /> : w.sticker}</p>}
+                {w.voiceId && <audio controls preload="none" style={{width:"100%"}} src={`/api/carnival/voice/${w.voiceId}`} />}
                 <p className="wish-time">{timeAgo(w.createdAt)}</p>
               </article>
             ))}

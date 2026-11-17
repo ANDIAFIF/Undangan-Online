@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
+import {stickerImage} from "@/lib/carnival-stickers";
 import { useRouter } from "next/navigation";
 
 export type WishRow = {
@@ -9,6 +10,8 @@ export type WishRow = {
   attendance: "HADIR" | "RAGU" | "TIDAK_HADIR";
   guestCount: number;
   message: string;
+  voiceId?: string | null;
+  sticker?: string | null;
   isVisible: boolean;
   createdAt: string;
 };
@@ -164,7 +167,7 @@ export default function WishList({ wishes }: { wishes: WishRow[] }) {
                         {w.attendance === "HADIR" && w.guestCount > 1 ? ` · ${w.guestCount}` : ""}
                       </span>
                     </td>
-                    <td style={{ maxWidth: 340, fontSize: ".82rem", color: "#4c5f54" }}>{w.message}</td>
+                    <td style={{ maxWidth: 340, fontSize: ".82rem", color: "#4c5f54" }}>{w.message}{w.sticker && <p style={{fontSize:"1.5rem"}}>{stickerImage(w.sticker) ? <img src={stickerImage(w.sticker)} alt="Stiker ucapan" width="80" loading="lazy" /> : w.sticker}</p>}{w.voiceId && <audio controls preload="none" style={{width:"100%",maxWidth:280}} src={`/api/carnival/voice/${w.voiceId}`} />}</td>
                     <td className="b-hint" style={{ whiteSpace: "nowrap" }}>
                       {fmt(w.createdAt)}
                     </td>
