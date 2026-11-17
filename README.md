@@ -126,7 +126,7 @@ Build produksi disimpan di `.next-production`, terpisah dari cache development `
 
 Halaman publik kini menggunakan `src/components/invitation/karnaval/`, dengan referensi visual [Karnaval Kita Quest](https://inveet.id/theme-preview/karnaval-kita-quest). Data mempelai, tanggal, tempat, musik, rekening, galeri, dan token tamu tetap berasal dari database proyek. Cover menggunakan nama panggilan yang sudah tersimpan. Panel admin tetap tersedia di `/admin`.
 
-- Cover pixel, pilihan karakter pria/wanita, sambutan dari teks pembuka yang sudah ada, dan panduan.
+- Cover pixel, pilihan karakter pria/wanita, sapaan voice MP3 dengan teks dari pengguna, dan panduan.
 - Peta tiga area dengan joystick/WASD/panah, tombol aksi, stan undangan, bianglala berputar, orkes, pemandu kucing interaktif, dan lentera ucapan yang bisa diketuk. Desktop memakai area permainan 480 px seperti referensi.
 - Modal mempelai, acara/countdown/peta/kalender, galeri/lightbox, kisah, hadiah/salin rekening, RSVP, QR tautan undangan, dan pintasan undangan ringkas.
 - Lempar Gelang: enam lemparan, bidik lalu atur tenaga. Pancing Bebek: 30 detik, empat nilai bebek. Skor memberi 1–3 kupon, kunjungan pertama memberi satu kupon, enam aksesori dapat ditukar dan dikenakan. Kupon dan inventaris disimpan di perangkat per undangan/token tamu.
@@ -135,7 +135,7 @@ Halaman publik kini menggunakan `src/components/invitation/karnaval/`, dengan re
 - Photobox: kamera depan, tiga pose dengan hitung mundur, pilihan foto dari perangkat, empat efek, tiga desain bingkai (Karnaval/Tiket/Klasik), warna bingkai yang langsung memperbarui hasil, dan unduhan PNG 680 × 1680. Foto photobox diproses di perangkat, tidak diunggah.
 - Ucapan menerima 25 stiker PNG/GIF dari katalog referensi dan rekaman suara opsional maksimal 30 detik/3 MB. Rekaman disimpan di PostgreSQL; audio ucapan tersembunyi hanya dapat diakses admin.
 
-Sambutan memakai teks pembuka undangan, sesuai pilihan pengguna. Tombol **Dengarkan teks** memakai `speechSynthesis` browser, bukan rekaman/kloning suara mempelai. Catatan internal tamu tidak dibuka kepada tamu. QR berisi tautan undangan; tidak menyatakan tamu sudah check-in. Chat dan papan skor memakai backend proyek sendiri, bukan koneksi ke layanan Inveet.
+Sambutan memakai `public/audio/welcome-voice.mp3` (file HeyGen yang diberikan pengguna), dengan naskah persis yang dikirim pengguna. Voice diputar setelah klik **Masuk Karnaval**, dilengkapi jeda/putar dan ulang dari awal. Musik latar dijeda selama sapaan; menutup atau melanjutkan sapaan menghentikan voice dan memulai musik. Jika browser menolak pemutaran, tombol **Putar sapaan** tersedia. Catatan internal tamu tidak dibuka kepada tamu. QR berisi tautan undangan; tidak menyatakan tamu sudah check-in. Chat dan papan skor memakai backend proyek sendiri, bukan koneksi ke layanan Inveet.
 
 ### Skema dan menjalankan
 
@@ -163,3 +163,5 @@ Aset tema dan font berada di `public/karnaval/` dan `karnaval/fonts.css`, disimp
 Perbaikan kamera memiliki 7 tes tambahan untuk fallback constraint, pembatalan izin, frame belum siap, timeout, dan pesan error. Pengguna sudah mengonfirmasi kamera fisik tampil di localhost. Bingkai kini dapat diganti setelah foto tanpa mengambil ulang.
 
 Panduan Ubuntu + PM2 dengan database VPS yang sudah ada: [docs/DEPLOY-VPS.md](docs/DEPLOY-VPS.md). Konfigurasi proses opsional tersedia di `ecosystem.config.js`; sesuaikan port/nama dengan deployment yang berjalan.
+
+Pembaruan voice pembuka: build produksi dan 8 pemeriksaan browser lulus (autoplay setelah klik masuk, musik dijeda, jeda/ulang voice, lanjut/tutup/reopen sambutan, tanpa runtime error). Teks pendamping berupa dua paragraf naskah pengguna, bukan subtitle dengan timestamp.

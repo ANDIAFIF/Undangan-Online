@@ -1,8 +1,27 @@
 'use client';
-import {useEffect,useState} from 'react';
-export default function Welcome({text,name,onContinue}:{text:string;name:string;onContinue:()=>void}){
- const [speaking,setSpeaking]=useState(false),[supported,setSupported]=useState(false),[error,setError]=useState('');
- useEffect(()=>{setSupported('speechSynthesis' in window);return()=>{if('speechSynthesis' in window)speechSynthesis.cancel();};},[]);
- function speak(){if(speaking){speechSynthesis.cancel();setSpeaking(false);return;}setError('');const utterance=new SpeechSynthesisUtterance(text);utterance.lang='id-ID';utterance.rate=.9;const voice=speechSynthesis.getVoices().find(v=>v.lang.startsWith('id'));if(voice)utterance.voice=voice;utterance.onstart=()=>setSpeaking(true);utterance.onend=()=>setSpeaking(false);utterance.onerror=()=>{setSpeaking(false);setError('Suara belum tersedia. Kamu tetap bisa membaca sambutannya.');};speechSynthesis.speak(utterance);}
- return <div className="kk-letter"><p>Untuk {name}</p><p>{text}</p>{supported&&<><button className="kk-button secondary" onClick={speak}>{speaking?'Hentikan suara':'Dengarkan teks'}</button><p><small>Dibacakan oleh suara browser.</small></p></>}{error&&<p role="status">{error}</p>}<button className="kk-button" onClick={onContinue}>Lanjut ke karnaval</button></div>;
+
+export default function Welcome({ name, playing, error, onPlay, onPause, onReplay, onContinue }: {
+  name: string;
+  playing: boolean;
+  error: boolean;
+  onPlay: () => void;
+  onPause: () => void;
+  onReplay: () => void;
+  onContinue: () => void;
+}) {
+  return <div className="kk-letter">
+    <p>Untuk {name}</p>
+    <div className="kk-welcome-transcript">
+      <p>Hai kalau kamu lagi dengerin pesan ini berarti kamu termasuk orang spesial yang pengin banget kami undang ke hari bahagia kami.</p>
+      <p>Makasih yah udah jadi orang baik buat kami selama ini dan pokoknya kamu harus datang yah! Kami tunggu di sana!</p>
+    </div>
+    <div className="kk-row">
+      <button type="button" className="kk-button secondary" onClick={playing ? onPause : onPlay}>
+        {playing ? 'Jeda sapaan' : 'Putar sapaan'}
+      </button>
+      <button type="button" className="kk-button secondary" onClick={onReplay}>Ulangi dari awal</button>
+    </div>
+    {error && <p role="status">Suara belum bisa diputar. Ketuk Putar sapaan untuk mencoba lagi.</p>}
+    <p><button type="button" className="kk-button" onClick={onContinue}>Lanjut ke karnaval</button></p>
+  </div>;
 }
