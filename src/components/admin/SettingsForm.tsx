@@ -46,6 +46,7 @@ export type SettingsData = {
 export default function SettingsForm({ initial }: { initial: SettingsData }) {
   const router = useRouter();
   const [form, setForm] = useState<SettingsData>(initial);
+  const [removedGallery, setRemovedGallery] = useState<{ url: string; index: number }[]>([]);
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [msg, setMsg] = useState<{ type: "ok" | "err"; text: string } | null>(null);
@@ -54,9 +55,27 @@ export default function SettingsForm({ initial }: { initial: SettingsData }) {
     setForm((f) => ({ ...f, [key]: value }));
   }
 
+  function removeGalleryPhoto(index: number) {
+    const url = form.gallery[index];
+    if (busy || uploading || !url) return;
+    setRemovedGallery(items => [...items, { url, index }]);
+    setForm(current => ({ ...current, gallery: current.gallery.filter((_, i) => i !== index) }));
+  }
+
+  function undoGalleryRemoval() {
+    const latest = removedGallery.at(-1);
+    if (busy || uploading || !latest || form.gallery.length >= 40) return;
+    setForm(current => {
+      const gallery = [...current.gallery];
+      gallery.splice(latest.index, 0, latest.url);
+      return { ...current, gallery };
+    });
+    setRemovedGallery(items => items.slice(0, -1));
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (uploading) return;
+    if (busy || uploading) return;
     setBusy(true);
     setMsg(null);
     try {
@@ -70,6 +89,7 @@ export default function SettingsForm({ initial }: { initial: SettingsData }) {
         setMsg({ type: "err", text: data.error || "Gagal menyimpan" });
         return;
       }
+      setRemovedGallery([]);
       setMsg({ type: "ok", text: "Pengaturan tersimpan" });
       router.refresh();
     } catch {
@@ -516,6 +536,7 @@ export default function SettingsForm({ initial }: { initial: SettingsData }) {
               className="b-textarea"
               style={{ minHeight: 110 }}
               value={form.gallery.join("\n")}
+              disabled={busy || uploading}
               onChange={(e) =>
                 set(
                   "gallery",
@@ -526,14 +547,21 @@ export default function SettingsForm({ initial }: { initial: SettingsData }) {
             />
             <PhotoUpload multiple remaining={Math.max(0, 40 - form.gallery.length)} disabled={busy || uploading} onBusy={setUploading}
               onUploaded={(url) => setForm((current) => ({ ...current, gallery: [...current.gallery, url] }))} />
-            <p style={{ fontSize: ".85rem" }}>{form.gallery.length}/40 foto. Perubahan foto diterapkan setelah menekan Simpan Perubahan.</p>
+            <p style={{ fontSize: ".85rem" }}>{form.gallery.length}/40 foto. Klik Simpan Perubahan untuk memperbarui galeri tamu.</p>
+            {removedGallery.length > 0 && (
+              <div className="toolbar">
+                <span role="status">{removedGallery.length} foto dihapus dari daftar. {form.gallery.length >= 40 ? "Kosongkan satu slot untuk mengurungkan." : "Perubahan belum disimpan."}</span>
+                <button type="button" className="b-btn b-ghost" disabled={busy || uploading || form.gallery.length >= 40}
+                  onClick={undoGalleryRemoval}>Urungkan</button>
+              </div>
+            )}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: ".75rem", marginTop: "1rem" }}>
               {form.gallery.map((url, index) => (
                 <div key={`${index}-${url}`}>
                   <img src={url} alt={`Pratinjau galeri ${index + 1}`} style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 10 }} />
                   <button type="button" className="b-btn b-ghost" disabled={busy || uploading}
                     aria-label={`Hapus foto galeri ${index + 1}`}
-                    onClick={() => setForm((current) => ({ ...current, gallery: current.gallery.filter((_, i) => i !== index) }))}>Hapus</button>
+                    onClick={() => removeGalleryPhoto(index)}>Hapus dari galeri</button>
                 </div>
               ))}
             </div>
