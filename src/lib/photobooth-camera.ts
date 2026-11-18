@@ -31,15 +31,16 @@ function requestStream(
 export async function acquireCamera(
   devices: Pick<MediaDevices, 'getUserMedia'>,
   signal: AbortSignal,
+  facingMode: 'user' | 'environment' = 'user',
 ) {
   try {
     return await requestStream(devices, {
       audio: false,
-      video: { facingMode: { ideal: 'user' }, width: { ideal: 720 }, height: { ideal: 960 } },
+      video: { facingMode: facingMode === 'user' ? { ideal: 'user' } : { exact: 'environment' }, width: { ideal: 720 }, height: { ideal: 960 } },
     }, signal);
   } catch (error) {
     // Some cameras cannot negotiate the preferred portrait resolution.
-    if (!signal.aborted && (error as DOMException)?.name === 'OverconstrainedError') {
+    if (facingMode === 'user' && !signal.aborted && (error as DOMException)?.name === 'OverconstrainedError') {
       return requestStream(devices, { audio: false, video: true }, signal);
     }
     throw error;

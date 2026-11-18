@@ -10,4 +10,56 @@ body:has(.kk-app):before{content:'';position:fixed;inset:-50px;background:linear
 .kk-modal .cd-item{background:#f0dfba;border:2px solid #ba9860;color:#503921}.kk-modal .cd-num{color:#6a462d;font-family:'VT323',monospace}.kk-modal .cd-label{color:#6b5940;font-family:inherit}
 .kk-stickers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));max-height:180px;overflow:auto;padding:6px;border:1px solid #d7c099;border-radius:8px}.kk-stickers button{padding:4px;min-width:0;min-height:50px}.kk-stickers button[aria-pressed=true]{background:#e5c57d;border:2px solid #936a36}.kk-stickers img{width:100%;height:48px;object-fit:contain}.kk-wish-sticker{width:100px;height:100px;object-fit:contain}.kk-world-bubble{position:absolute;top:155px;left:15px;right:15px;padding:14px 18px;background:#fff5dd;border:3px solid #8c673c;border-radius:12px;box-shadow:0 4px 0 #38291f;color:#382a21;z-index:5}.kk-world-bubble strong{display:block;color:#ad4868;font-weight:400;margin-right:24px}.kk-world-bubble p{margin:8px 0 0;white-space:pre-line;overflow-wrap:anywhere;max-height:170px;overflow:auto}.kk-world-bubble button{position:absolute;top:8px;right:10px;border:0;background:transparent;font-size:24px}
 .kk-camera video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.kk-frame-options{display:flex;gap:12px;margin:14px 0}.kk-frame-option{flex:1;min-width:0;border:2px solid #c6ac7d;border-radius:7px;padding:8px;background:#fff8e5;color:#233f33}.kk-frame-option[aria-pressed=true]{border-color:#9b4764;box-shadow:0 0 0 2px #9b4764}.kk-frame-option>span{display:block;margin:0 auto 6px;padding:3px 6px;width:48px;background:#fff3d4;border:1px solid #233f33;font:12px monospace}.kk-frame-option i{display:block;height:19px;background:#629c8a;margin:3px 0}.kk-frame-option.ticket>span{border:2px dashed #233f33}.kk-frame-option.carnival>span{color:#b74c62}
+
+.kk-photo-choices{min-width:0;border:0;padding:0;margin:0 0 18px}
+.kk-photo-choices legend{font-weight:700;margin-bottom:9px}
+.kk-template-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.kk-frame-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.kk-template-card{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;padding:8px 4px;background:#fffaf0;color:#493527;border:2px solid #ddc59e;border-radius:9px;text-align:center;line-height:1.2}
+.kk-template-card[aria-pressed=true]{background:#f7e7cf;border-color:#923a56;box-shadow:inset 0 0 0 1px #923a56}
+.kk-template-card canvas{display:block;width:100%;height:82px;object-fit:contain}
+.kk-frame-grid .kk-template-card canvas{height:72px}
+.kk-template-card span{font-size:14px;overflow-wrap:anywhere}
+.kk-template-card small{font-size:12px}
+.kk-photobooth .kk-camera{max-width:390px;margin-inline:auto}
+.kk-photo-result{text-align:center;margin:14px 0}
+.kk-photo-result .kk-photo-strip{width:auto;max-width:100%;max-height:36dvh;object-fit:contain;margin:12px auto}
+
+.kk-photo-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;list-style:none;margin:0 0 16px;padding:0}
+.kk-photo-steps li{min-width:0;padding:8px 4px;border-bottom:2px solid #d6bfa0;color:#66513e;text-align:center;font-size:13px}
+.kk-photo-steps li[aria-current=step]{border-color:#923a56;color:#80374c;font-weight:700}
+.kk-photo-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.kk-photo-heading b{text-align:right}
+.kk-camera-guide,.kk-camera-flash{position:absolute;inset:0;pointer-events:none}
+.kk-camera-guide{background:linear-gradient(to right, transparent 33%, #fff9 33% 33.5%, transparent 33.5% 66%, #fff9 66% 66.5%, transparent 66.5%),linear-gradient(to bottom, transparent 33%, #fff9 33% 33.5%, transparent 33.5% 66%, #fff9 66% 66.5%, transparent 66.5%)}
+.kk-camera-flash{background:#fffbeb}
+.kk-camera-tools{justify-content:center}
+.kk-photo-filters{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0}
+.kk-photobooth button[aria-pressed=true]{outline:2px solid #923a56;outline-offset:-2px}
+.kk-photo-review{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+.kk-photo-review img{width:100%;object-fit:cover;border-radius:5px}
+.kk-photo-result canvas{max-width:100%;max-height:42dvh;object-fit:contain}
+.kk-photo-editor-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin:12px 0}
+.kk-photo-editor-nav .kk-button{min-width:0;padding-inline:3px;font-size:13px;text-align:center}
+.kk-photo-frame-scroll{overflow:auto;max-height:280px;overscroll-behavior:contain;padding:3px}
+
+.kk-camera-console{overflow:hidden;border-radius:16px;background:#181718;color:#fff6e9;padding:5px}
+.kk-camera-toolbar,.kk-camera-actions{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;justify-items:center;gap:4px;padding:7px 3px}
+.kk-camera-console button{color:inherit}
+.kk-camera-toolbar button,.kk-camera-mode,.kk-camera-switch,.kk-camera-retry{padding:6px 8px;border:0;border-radius:999px;background:#333036;font-size:12px;white-space:nowrap}
+.kk-camera-toolbar button[aria-pressed=true],.kk-camera-mode[aria-pressed=true]{color:#ffcf73;outline:1px solid #ffcf73}
+.kk-camera-timer{font-size:12px;color:#ffcf73}
+.kk-camera-console .kk-camera{background:#30282d;border:0;border-radius:10px}
+.kk-camera-countdown{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.kk-countdown-number{display:grid;place-items:center;width:1.55em;height:1.55em;border-radius:50%;background:#1a151dbb;color:#fff4cf;font:700 clamp(44px,16vw,72px)/1 ui-rounded,system-ui,sans-serif;font-variant-numeric:tabular-nums;animation:kk-countdown-tick .24s ease-out}
+@keyframes kk-countdown-tick{from{transform:scale(1.15);opacity:.7}to{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.kk-countdown-number{animation:none}}
+.kk-camera-zoom{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.kk-camera-zoom button{display:grid;place-items:center;width:32px;height:32px;padding:0;border:0;border-radius:50%;background:#1a151dcc;font-size:12px}
+.kk-camera-zoom button[aria-pressed=true]{color:#ffcf73;outline:1px solid #ffcf73}
+.kk-camera-actions .kk-shutter{display:grid;place-items:center;width:60px;height:60px;padding:4px;border:2px solid #fff6e9;border-radius:50%;background:transparent}
+.kk-shutter-ring{width:100%;height:100%;border-radius:50%;background:#fff6e9}
+.kk-camera-switch{display:grid;place-items:center;width:36px;height:36px;padding:0;font-size:20px;line-height:1}
+.kk-camera-console .kk-photo-filters{padding:0 5px}
+.kk-camera-console .kk-photo-filters button{color:#392a30}
+.kk-template-artwork{display:block;width:100%;height:92px;object-fit:contain}
