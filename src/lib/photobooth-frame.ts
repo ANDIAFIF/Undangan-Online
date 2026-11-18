@@ -146,7 +146,7 @@ export function drawPhotoboxFrame(
   ctx.fillStyle = red * .299 + green * .587 + blue * .114 >= 140 ? '#342820' : '#fff9ee';
   ctx.textAlign = 'center';
   ctx.font = 'bold 20px monospace';
-  ctx.fillText('WEDDING KITA', width / 2, titleY, captionWidth - 28);
+  ctx.fillText('Wedding Day', width / 2, titleY, captionWidth - 28);
   ctx.font = 'bold 34px ' + font;
   ctx.fillText(couple, width / 2, titleY + 40, captionWidth - 28);
   ctx.font = '23px ' + font;
